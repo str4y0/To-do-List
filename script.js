@@ -28,10 +28,20 @@ listContainer.addEventListener("click", function(e){    // nuppu vajutamine
     }
 }, false);
 
-function saveData(){
-    localStorage.setItem("data", listContainer.innerHTML);  // salvestab kirjutatud data 
+async function saveData() {
+    console.log(listContainer.innerHTML);
+await fetch('https://tinkr.tech/sdb/str4ybase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({html: listContainer.innerHTML})
+    });
 }
-function showTask(){
-    listContainer.innerHTML = localStorage.getItem("data"); // call outib salvestatud data
+
+async function showTask() {
+
+    const response = await fetch('https://tinkr.tech/sdb/str4ybase');
+    const data = await response.json();
+    listContainer.innerHTML = data[data.length-1].html || "";
 }
+
 showTask();
