@@ -30,10 +30,10 @@ listContainer.addEventListener("click", function(e){    // nuppu vajutamine
 
 async function saveData() {
     console.log(listContainer.innerHTML);
-await fetch('https://tinkr.tech/sdb/str4ybase', {
+    await fetch('https://tinkr.tech/sdb/str4ybase', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({html: listContainer.innerHTML})
+        body: JSON.stringify({html: listContainer.innerHTML.split("×")})
     });
 }
 
@@ -41,7 +41,7 @@ async function showTask() {
 
     const response = await fetch('https://tinkr.tech/sdb/str4ybase');
     const data = await response.json();
-    listContainer.innerHTML = data[data.length-1].html || "";
+    listContainer.innerHTML = data[data.length-1].html.join('×');
 }
 
 showTask();
